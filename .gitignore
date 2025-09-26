@@ -1,0 +1,14 @@
+datasets/*
+!datasets/.gitkeep
+logs/*
+!logs/.gitkeep
+save/*
+!save/.gitkeep
+test/*
+!test/.gitkeep
+
+__pycache__/
+*.pyc
+
+.vscode/
+.DS_Store

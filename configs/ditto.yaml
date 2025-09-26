@@ -1,0 +1,32 @@
+# configs/ditto.yaml
+
+algo: ditto # Options: fedavg, ditto, etc...
+
+ditto_lambda: 1.0 # Regularization parameter for personalized models
+
+dataset: cifar10 # Options: cifar10, cifar20, cifar100
+
+partition: dir # Options: dir, shards
+
+dir_alpha: 0.3 # Dirichlet distribution parameter for data partitioning
+num_shards: 5 # Number of shards for each client
+
+model: resnet # Options: lenetgn, resnet
+
+sensitivity_num_clients: false # If true, use the ablation with varying num_clients for FedDRM
+num_clients: 8 # Number of clients
+
+# ---------------------------------------------------------------------------------------
+
+device: cuda:0
+
+seed: 2025
+
+num_clients: 8
+
+commu_round: 800
+local_steps: 10
+batch_size: 128
+lr: 0.01
+momentum: 0.9
+weight_decay: 5e-4
