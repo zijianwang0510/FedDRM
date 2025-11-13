@@ -9,6 +9,12 @@ num_shards: 5 # Number of shards for each client
 
 model: resnet # Options: lenetgn, resnet
 
+ablation_feature_shift: false # If true, use the ablation with feature shift for FedDRM
+shift_level: high # Options: low, mid, high
+
+ablation_arch: false # If true, use the ablation architecture for FedDRM
+share_level: deep # Options: no_share, shallow, mid, deep
+
 sensitivity_num_clients: false # If true, use the ablation with varying num_clients for FedDRM
 num_clients: 8 # Number of clients
 
