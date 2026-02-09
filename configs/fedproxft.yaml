@@ -1,10 +1,10 @@
 # configs/fedprox.yaml
 
-algo: fedproxft # Options: fedavg, fedprox, fedavgft, feddrm, fedrep
+algo: fedproxft
 
 fedprox_mu: 0.01 # Proximal term coefficient
 
-dataset: cifar10 # Options: cifar10, cifar20, cifar100
+dataset: cifar10 # Options: cifar10, cifar20, cifar100, retina
 
 partition: dir # Options: dir, shards
 

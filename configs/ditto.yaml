@@ -1,10 +1,10 @@
 # configs/ditto.yaml
 
-algo: ditto # Options: fedavg, ditto, etc...
+algo: ditto
 
 ditto_lambda: 1.0 # Regularization parameter for personalized models
 
-dataset: cifar10 # Options: cifar10, cifar20, cifar100
+dataset: cifar10 # Options: cifar10, cifar20, cifar100, retina
 
 partition: dir # Options: dir, shards
 

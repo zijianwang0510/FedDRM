@@ -1,10 +1,10 @@
 # configs/fedsam.yaml
 
-algo: fedsamft # Options: fedavg, fedprox, fedsam, etc...
+algo: fedsamft
 
 fedsam_rho: 0.05 # Neighborhood size for SAM optimizer
 
-dataset: cifar10 # Options: cifar10, cifar20, cifar100
+dataset: cifar10 # Options: cifar10, cifar20, cifar100, retina
 
 partition: dir # Options: dir, shards
 

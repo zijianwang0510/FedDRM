@@ -30,7 +30,7 @@ def seed_everything(seed):
 
 
 def save_path(cfg):
-    if 'feddrm' in cfg.algo:
+    if cfg.algo == "feddrm":
         if cfg.ablation_arch == True:
             ret = f"{cfg.algo}_{cfg.feddrm_ratio}_arch_{cfg.share_level}_{cfg.dataset}_{cfg.partition}_{cfg.dir_alpha if cfg.partition == 'dir' else cfg.num_shards}_T_{cfg.commu_round}_E_{cfg.local_steps}_{cfg.model}"
         elif cfg.ablation_feature_shift == True:
@@ -143,3 +143,14 @@ def select_algorithm(cfg):
         raise ValueError(f'Algorithm {cfg.algo} is not supported...')
     
     return FedAlgo
+
+
+def load_data(cfg):
+    if cfg.dataset in ["cifar10", "cifar20", "cifar100"]:
+        from utils.dataset import load_dataset
+        return load_dataset(cfg)
+    elif cfg.dataset == "retina":
+        from  utils.retina import load_dataset
+        return load_dataset(cfg)
+    else:
+        raise ValueError(f"Dataset {cfg.dataset} is not supported...")

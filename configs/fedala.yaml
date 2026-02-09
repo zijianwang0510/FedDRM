@@ -1,6 +1,6 @@
-algo: fedala # Options: fedavg, ditto, etc...
+algo: fedala
 
-dataset: cifar10 # Options: cifar10, cifar20, cifar100
+dataset: cifar10 # Options: cifar10, cifar20, cifar100, retina
 
 partition: dir # Options: dir, shards
 

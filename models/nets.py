@@ -202,7 +202,7 @@ class ResNet(nn.Module):
         self.image_ln = nn.LayerNorm(decoupled_feature_dim)
         self.image_classifier = nn.Linear(in_features=decoupled_feature_dim, out_features=num_classes)
 
-        if 'feddrm' in cfg.algo:
+        if cfg.algo == "feddrm":
             self.machine_fc = nn.Linear(in_features=shared_feature_dim, out_features=decoupled_feature_dim)
             self.machine_ln = nn.LayerNorm(decoupled_feature_dim)
             self.machine_classifier = nn.Linear(in_features=decoupled_feature_dim, out_features=cfg.num_clients)
@@ -218,7 +218,7 @@ class ResNet(nn.Module):
         image_feature = F.relu(self.image_ln(self.image_fc(shared_feature)))
         image_logits = self.image_classifier(image_feature)
 
-        if 'feddrm' in self.cfg.algo:
+        if self.cfg.algo == "feddrm":
             machine_feature = F.relu(self.machine_ln(self.machine_fc(shared_feature)))
             machine_logits = self.machine_classifier(machine_feature)
             return image_logits, machine_logits

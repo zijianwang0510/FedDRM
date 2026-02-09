@@ -5,8 +5,7 @@ sys.path.append(base_path)
 
 import argparse
 from omegaconf import OmegaConf
-from utils.utils import get_log_path, create_path, seed_everything, log_everything, select_algorithm
-from utils.dataset import load_dataset
+from utils.utils import get_log_path, create_path, seed_everything, log_everything, select_algorithm, load_data
 
 
 if __name__ == '__main__':
@@ -26,7 +25,7 @@ if __name__ == '__main__':
 
         seed_everything(cfg.seed)
 
-        train_loaders, test_loaders, num_data = load_dataset(cfg)
+        train_loaders, test_loaders, num_data = load_data(cfg)
 
         FedAlgo = select_algorithm(cfg)
 

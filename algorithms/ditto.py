@@ -52,7 +52,7 @@ class Ditto():
 
             self.spread_model()
 
-            self.record['train_loss'].append(np.mean(train_losses))
+            self.record['train_loss'].append(np.sum(self.weights * train_losses))
 
             avg_acc, test_loss = self.test_averaged_performance()
             self.record['avg_acc'].append(avg_acc)

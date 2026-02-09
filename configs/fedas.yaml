@@ -1,6 +1,6 @@
-algo: fedas # Options: fedavg, fedbn, fedavgft, feddrm, fedrep
+algo: fedas
 
-dataset: cifar10 # Options: cifar10, cifar20, cifar100
+dataset: cifar10 # Options: cifar10, cifar20, cifar100, retina
 
 partition: dir # Options: dir, shards
 

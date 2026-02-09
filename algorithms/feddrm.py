@@ -58,8 +58,8 @@ class FedDRM():
             self.spread_model()
 
             # -----------------Record------------------
-            self.record['train_loss'].append(np.mean(train_losses))
-            self.record['machine_train_loss'].append(np.mean(machine_train_losses))
+            self.record['train_loss'].append(np.sum(self.weights * train_losses))
+            self.record['machine_train_loss'].append(np.sum(self.weights * machine_train_losses))
 
             avg_acc, machine_avg_acc, test_loss, machine_test_loss = self.test_averaged_performance()
             self.record['avg_acc'].append(avg_acc)
@@ -72,8 +72,6 @@ class FedDRM():
 
             print(f"[Round: {t}] [Train Loss: {self.record['train_loss'][-1]:.4f}] [Machine Train Loss: {self.record['machine_train_loss'][-1]:.4f}] [Test Loss: {test_loss:.4f}] [Avg Accuracy: {avg_acc:.4f}] [Sys Accuracy: {sys_acc:.4f}] [Machine Avg Accuracy: {machine_avg_acc:.4f}] [Machine Test Loss: {machine_test_loss:.4f}]")
             self.logfile.write(f"[Round: {t}] [Train Loss: {self.record['train_loss'][-1]:.4f}] [Machine Train Loss: {self.record['machine_train_loss'][-1]:.4f}] [Test Loss: {test_loss:.4f}] [Avg Accuracy: {avg_acc:.4f}] [Sys Accuracy: {sys_acc:.4f}] [Machine Avg Accuracy: {machine_avg_acc:.4f}] [Machine Test Loss: {machine_test_loss:.4f}]\n")
-            # print(f"[Round: {t}] [Train Loss: {self.record['train_loss'][-1]:.4f}] [Machine Train Loss: {self.record['machine_train_loss'][-1]:.4f}] [Test Loss: {test_loss:.4f}] [Avg Accuracy: {avg_acc:.4f}] [Machine Avg Accuracy: {machine_avg_acc:.4f}] [Machine Test Loss: {machine_test_loss:.4f}]")
-            # self.logfile.write(f"[Round: {t}] [Train Loss: {self.record['train_loss'][-1]:.4f}] [Machine Train Loss: {self.record['machine_train_loss'][-1]:.4f}] [Test Loss: {test_loss:.4f}] [Avg Accuracy: {avg_acc:.4f}] [Machine Avg Accuracy: {machine_avg_acc:.4f}] [Machine Test Loss: {machine_test_loss:.4f}]\n")
             self.logfile.flush()
 
             self.writer.add_scalar('Train Loss', self.record['train_loss'][-1], t)
@@ -209,6 +207,7 @@ class FedDRM():
 
         local_models = [torch.load(path, weights_only=True) for path in self.local_model_path]
         global_model = torch.load(self.global_model_path, weights_only=True)
+        log_const = torch.log(torch.tensor(self.weights)).to(self.cfg.device)
 
         with torch.no_grad():
             for test_loader in self.test_loaders:
@@ -218,7 +217,8 @@ class FedDRM():
                     self.model.load_state_dict(global_model)
                     self.model.eval()
                     _, machine_logits = self.model(images)
-                    pred_clients = machine_logits.argmax(dim=1)
+                    density_logits = machine_logits - log_const
+                    pred_clients = density_logits.argmax(dim=1)
 
                     all_feature_logits = []
                     for i in range(self.cfg.num_clients):
